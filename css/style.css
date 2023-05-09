@@ -42,6 +42,7 @@ header{
     background-image: url(../images/Hagit_image.png);
     width: 61px;
     height: 57px;
+    background-repeat: no-repeat;
     border-radius: 40px;
 }
 #body_index {
