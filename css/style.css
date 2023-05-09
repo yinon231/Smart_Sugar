@@ -1,0 +1,46 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 8.3984375vh;
+    width: 100%;
+    background-color: #1D3649;
+}
+#flex-icons{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 1.11111vw;
+    align-items: center;
+    width: auto;
+}
+#logo{
+    background-image: url(../images/LogoSmart.png);
+    background-repeat: no-repeat;
+    width: 86px;
+    height: 50px;
+    margin-left: 1.944444vw;
+}
+#notification{
+    background-image: url(../images/notification.png);
+    background-repeat: no-repeat;
+    width: 28px;
+    height: 34px;
+    margin-right: 2.083333vw;
+}
+#settings{
+    background-image: url(../images/settings.png);
+    background-repeat: no-repeat;
+    height: 38px;
+    width: 38px;
+    margin-right: 2.083333vw;
+}
+#circle{
+    background-image: url(../images/Hagit_image.png);
+    width: 61px;
+    height: 57px;
+    border-radius: 40px;
+}
