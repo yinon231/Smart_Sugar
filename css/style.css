@@ -41,8 +41,9 @@ header{
 #circle{
     background-image: url(../images/Hagit_image.png);
     width: 61px;
-    height: 57px;
+    height: 5.5664vh;
     border-radius: 40px;
+    background-repeat: no-repeat;
 }
 #body_index {
 	background-color: #EDEDED;
