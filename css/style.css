@@ -39,8 +39,79 @@ header{
     margin-right: 2.083333vw;
 }
 #circle{
-    background-image: url(../images/Hagit_image.png);
+    background-color: aqua;
     width: 61px;
     height: 57px;
     border-radius: 40px;
+}
+#body_index {
+	background-color: #EDEDED;
+}
+#profiles {
+	position: absolute;
+	left: 44.65%;
+	right: 46.04%;
+	top: 14.45%;
+	font-family: 'Amiko';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 36px;
+	line-height: 48px;
+	color: #000000;
+  }
+  
+  #patients-list {
+	position: absolute;
+	left: 43.47%;
+	right: 43.4%;
+	top: 23%;
+	font-family: 'Amiko';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 24px;
+	color: #000000;
+  }
+
+  #Search_Patients > #search {
+	position: absolute;
+	right: 75.49%;
+	bottom: 66.8%;
+	background: #FFFFFF;
+	height: 32px;
+	width: 197px;
+	left: 156px;
+	top: 308px;
+	border-radius: 35px;
+  }
+
+  #black-line {
+	position: absolute;
+	height: 0px;
+	width: 980px;
+	left: 156px;
+	top: 348px;
+	border: 1px solid #000;
+	border-radius: 0px;
+  }
+  .btn {
+	position: absolute;
+	top: 352px;
+	right: 140px;
+	padding: 10px 20px;
+	background-color:#3E5D75	;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	font-family: Amiko;
+	font-size: 22px;
+	font-weight: 400;
+	line-height: 29px;
+	letter-spacing: 0em;
+	text-align: center;
+	Width: 174px;
+	Height: 37px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
