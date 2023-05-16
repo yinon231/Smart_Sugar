@@ -7,6 +7,7 @@ body{
     overflow-x: hidden;
 }
 header{
+    min-height: 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -69,7 +70,6 @@ header{
 }
 .nav{
     width: auto;
-    height: 4.296875vh;
     background-color: #1D3649;;
 }
 .nav-link{
@@ -83,6 +83,7 @@ header{
     align-items: center;
 }
 footer {
+    min-height: 44px;
     margin-top: 30.17vh;
     padding-left: 8px;
     display: flex;
@@ -98,6 +99,7 @@ footer {
     --bs-gutter-x: 50% !important;
 }
 .search{
+    min-height: 32px;
     margin-bottom: 1.46vh;
     height: 3.125vh !important; 
     width: 13.68vw !important; 
@@ -374,6 +376,7 @@ h1{
         gap:10px
     }
     .profile-small{
+        min-height: 55px;
         display: flex;
         justify-content: space-between;
         padding-left: 5.633%;
