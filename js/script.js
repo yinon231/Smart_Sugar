@@ -1,3 +1,12 @@
+const divs = document.querySelectorAll('.profile-small');
+
+// Add a click event listener to each div
+divs.forEach(function(div) {
+  div.addEventListener('click', function() {
+    // Navigate to the desired page
+    window.location.href = '2.html'; // Replace with your desired page URL
+  });
+});
 
 function readURL(input) {
    
@@ -29,7 +38,7 @@ $(document).ready(function(){
 
     // Get the search input element
     const searchInput = document.querySelector(".search");
-
+    const footer=document.querySelector("footer");
     // Add event listener to search input for keyup event
     searchInput.addEventListener("keyup", function() {
 
@@ -37,8 +46,25 @@ $(document).ready(function(){
       const searchValue = searchInput.value.toLowerCase();
 
       // Get all rows of profiles
-      const profileRows = document.querySelectorAll(".row-profile");
+      const profilesmallRows=document.querySelectorAll(".profile-small");
+  
 
+      profilesmallRows.forEach(function(profile){
+        const name=profile.querySelector("#bold").textContent.toLowerCase();
+        if(name.includes(searchValue)){
+          profile.style.display="flex";
+          footer.style.position="relative";
+          
+        }
+        else{ profile.style.display="none";
+              footer.style.position="absolute";
+              footer.style.bottom="0";
+
+        } 
+
+      });
+      const profileRows = document.querySelectorAll(".row-profile");
+      console.log(profilesmallRows);
       // Loop through each profile row
       profileRows.forEach(function(row) {
 

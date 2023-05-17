@@ -100,7 +100,7 @@ footer {
 }
 .search{
     min-height: 32px;
-    margin-bottom: 1.46vh;
+    margin-bottom: 2.3469vh;
     height: 3.125vh !important; 
     width: 13.68vw !important; 
     border-radius: 35px !important;
@@ -121,8 +121,8 @@ footer {
 }
 h1{
     text-align: center;
-    margin-bottom: 19px !important;
-    margin-bottom: 1rem!important;
+    margin-bottom: 2.96vh !important;
+
 }
 
 
@@ -388,6 +388,7 @@ h1{
         margin-bottom: 1.66vh;
     }
     span{
+        text-align: center !important;  
         font-family: 'Amiko';
     }
     #bold{
