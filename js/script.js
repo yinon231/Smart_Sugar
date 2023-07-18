@@ -107,16 +107,17 @@ $(document).ready(function(){
   }
 
   // form ensure //
-  function submitForm() {
-    const form = document.querySelector('.form-container form');
-    const errorMessage = document.querySelector('.form-container .error-message');
+  // function submitForm() {
+
+  //   const form = document.querySelector('.form-container form');
+  //   const errorMessage = document.querySelector('.form-container .error-message');
   
-    if (form.checkValidity()) {
-      alert("The Profile Saved")
-      form.submit();
-    } else {
-      errorMessage.style.display = 'block';
-    }
-  }
+  //   if (form.checkValidity()) {
+  //     alert("The Profile Saved")
+  //     form.submit();
+  //   } else {
+  //     errorMessage.style.display = 'block';
+  //   }
+  // }
   
   

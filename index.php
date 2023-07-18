@@ -116,15 +116,17 @@ session_start();
     <h3 id ="List_text">List Of Your Patients</h3>
     <input type="text" class="form-control search" placeholder="  Search" width="40px">
     <div class="btn-div">
-      <button class="btn btn-style" title="Add Profile" onclick="window.location.href = 'Add_Patient.html';">+ Add Profile</button>
+      <button class="btn btn-style" title="Add Profile" onclick="window.location.href = 'Add_Patient.php';">+ Add Profile</button>
     </div>
     <?php
+   
     if(!empty($query))
     {
+      echo  "<div class='small'>";
       while($row=mysqli_fetch_assoc($result))
       {
-        echo  "<div class='small'>
-        <div class='profile-small'>
+
+       echo "<div class='profile-small'>
           <div class='cover'>
               <img src=".$row['Img']." width='48' height='48' alt='' style='border-radius: 50%;'>
               <div class='data'>
@@ -137,11 +139,13 @@ session_start();
               </div>
             </div>
           <button class='btn btn-style'>Edit</button>
-        </div>
-      </div>";
+        </div>";
       }
-      
+     echo "</div>";
     }
+    ?>
+   
+    <?php
     if (isset($_SESSION['id'])) {
       $query="SELECT * FROM tbl_203_patients WHERE UserID=".$_SESSION['id']."";
       $result=mysqli_query($connection,$query);
@@ -182,10 +186,9 @@ session_start();
               <button class='btn btn-secondary rounded-circle' data-toggle='tooltip' data-placement='top' title='Edit User'><i class='fas fa-pen'></i></button>
               <button class='btn btn-danger rounded-circle' data-toggle='tooltip' data-placement='top' title='Delete User'><i class='fas fa-times'></i></button>
             </div>
-          </div>
-        </div>
-      </div>";
+          </div>";
         }
+        echo "</div>";
       }
     ?>
     </main>

@@ -1,3 +1,14 @@
+<?php
+include "db.php";
+include "config.php";
+session_start();
+if(!isset($_SESSION['id']))
+{
+  header('Location: ' .URL. 'login.php');
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -95,17 +106,16 @@
   <main>
   <div class="container-fluid add">
   <h1>Add Profile</h1>
-  <div class="avatar-upload">
-    <div class="avatar-preview">
-      <div class="avatar-edit">
-        <label id="pencil" for="imageUpload"></label>
-        <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
-    </div>
-        <div id="imagePreview">
-        </div>
-    </div>
-  </div>
   <form action="" method="get">
+        <div class="avatar-upload">
+          <div class="avatar-preview">
+            <div class="avatar-edit">
+              <label id="pencil" for="imageUpload"></label>
+              <input name="image" type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+            </div>
+              <div id="imagePreview"></div>
+          </div>
+        </div>
         <div class="mb-3">
             <label class="form-label">Full Name</label>
             <input type="text" name="fullName" class="form-control" id="fullName" pattern="^[A-Za-z]+(?:\s[A-Za-z]+)+$" required title="Please enter a valid name (letters and spaces only)" required>
@@ -115,14 +125,14 @@
             <input type="number" name="height" class="form-control" required min="70" max="250">
         </div>
         <div class="mb-3">
-          <label class="form-label">Width</label>
-          <input type="number" name="width" class="form-control" required min="1" max="120">
+          <label class="form-label">Weight</label>
+          <input type="number" name="weight" class="form-control" required min="20" max="300">
         </div>
         <div class="mb-3">
           <label class="form-label">Age</label>
           <input type="number" name="age" class="form-control" required min="0" max="120">
         </div>
-        <select class="form-select mb-3-top" aria-label="Default select example" required>
+        <select name="type" class="form-select mb-3-top" aria-label="Default select example" required>
           <option selected>Choose diabetes type</option>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -130,11 +140,48 @@
         </select>
           <div class="mb-3">
           <label class="form-label">Blood Pressure</label>
-          <input type="number" name="blood" class="form-control" id="password" required min="10" max="440">
+          <input type="number" name="blood" class="form-control" required min="10" max="440">
         </div>
         <div class="mb-3 center">
-              <input type="submit" class="btn btn-outline-secondary" value="Add Profile" id="btn-form" onclick="submitForm();">
+              <input type="submit" class="btn btn-outline-secondary" value="Add Profile" id="btn-form">
         </div>
+        <?php
+        if(isset($_GET['fullName']))
+         {
+          $id=$_SESSION['id'];
+          $image=$_GET['image'];
+          $fileName =$_GET['fullName']. '_' . $image;
+          $destination = 'uploads/' . $fileName;
+          move_uploaded_file($fileName,'uploads/');
+          $name=$_GET['fullName'];
+          $height=$_GET['height'];
+          $weight=$_GET['weight'];
+          $age=$_GET['age'];
+          $type=$_GET['type'];
+          $blood_pressure=$_GET['blood'];
+          $sugar_level=100;
+          $prediction_sugar=100;
+
+          $query = "INSERT INTO tbl_203_patients (UserID,name,Type,Height,Weight,Age,Blood_Pressure,Img,Sugar_Level,Prediction_Level) VALUES ('$id', '$name','$type','$height','$weight', '$age', '$blood_pressure', '$destination','$sugar_level','$prediction_sugar')";
+          $result = mysqli_query($connection, $query);
+
+          if ($result) {
+            // Insert query was successful
+            echo "<div class='alert alert-success' role='alert'>Add Patient Successfully!</div>";
+        
+            // Close the database connection
+            mysqli_close($connection);
+            
+            // Redirect to another page
+            header('Location: '.URL.'index.php');
+            exit();
+          }
+          else {
+            // Insert query failed
+            die ("Error inserting data: " . mysqli_error($connection));
+          }
+         }
+        ?>
     </form>
     </div>
   </main> 
