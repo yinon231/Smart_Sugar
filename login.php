@@ -3,17 +3,22 @@ include "db.php";
 include "config.php";
 
 session_start();
-if(!empty($_POST['email'])){
+if(!empty($_POST['email']))
+{
+
   $query="SELECT * FROM tbl_203_users WHERE email='". $_POST['email']."' and password='".$_POST['password']."'";
   $result=mysqli_query($connection,$query);
   $row=mysqli_fetch_array($result);
   if(is_array($row))
   {
-   $_SESSION['name']=$row['name'];
-    header('Location: ' .URL. 'index.html');
+   $_SESSION['id']=$row['id'];
+    header('Location: ' .URL. 'index.php');
 
   }
-  else $message="Invalid Email or Passowrd!";
+  else
+  { 
+    $message="Invalid Email or Passowrd!";
+  }
 }
 ?>
 <!DOCTYPE html>
