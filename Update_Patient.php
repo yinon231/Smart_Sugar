@@ -1,13 +1,21 @@
-<?php
+<?php 
 include "db.php";
 include "config.php";
 session_start();
-if(!isset($_SESSION['id']))
-{
+$id=$_GET['id'];
+if (isset($_SESSION['id'])) {
+   if(empty($_POST['fullName']))
+   {
+        $query="SELECT * FROM tbl_203_patients WHERE PatientID=".$_GET['id']."";
+        $result=mysqli_query($connection,$query);
+        $row=mysqli_fetch_assoc($result);
+   }
+} else {
   header('Location: ' .URL. 'login.php');
 }
 
-?>
+
+?> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +29,7 @@ if(!isset($_SESSION['id']))
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="js/script.js"></script>
     <title>Document</title>
 </head>
 <body>
@@ -104,31 +113,48 @@ if(!isset($_SESSION['id']))
   <main>
   <div class="container-fluid add">
   <h1>Add Profile</h1>
-  <form action="" method="post" enctype="multipart/form-data" id="Add">
+  <form action="" method="post" enctype="multipart/form-data" id="update">
         <div class="avatar-upload">
           <div class="avatar-preview">
             <div class="avatar-edit">
               <label id="pencil" for="imageUpload"></label>
-              <input name="image" type='file' id="imageUpload" accept=".png, .jpg, .jpeg"/>
+              <input name="image" type='file' id="imageUpload" accept=".png, .jpg, .jpeg"  />
             </div>
-              <div id="imagePreview"></div>
+              <div id="imagePreview" <?php if(empty($_POST['fullName'])) echo "style='background-image:url(".$row['Img'].")'" ?>
+              ></div>
           </div>
         </div>
         <div class="mb-3">
             <label class="form-label">Full Name</label>
-            <input type="text" name="fullName" class="form-control" id="fullName" pattern="^[A-Za-z]+(?:\s[A-Za-z]+)+$" required title="Please enter a valid name (letters and spaces only)" required>
+            <input type="text" name="fullName" class="form-control" id="fullName" pattern="^[A-Za-z]+(?:\s[A-Za-z]+)+$" required title="Please enter a valid name (letters and spaces only)"
+            <?php
+              if(empty($_POST['fullName'])) echo "value='".$row['name']."'";
+            ?>
+             required>
         </div> 
         <div class="mb-3">
             <label class="form-label">Height</label>
-            <input type="number" name="height" class="form-control" required min="70" max="250">
+            <input type="number" name="height" class="form-control" required min="70" max="250"
+            <?php
+              if(empty($_POST['fullName'])) echo "value='".$row['Height']."'";
+            ?>
+            >
         </div>
         <div class="mb-3">
           <label class="form-label">Weight</label>
-          <input type="number" name="weight" class="form-control" required min="20" max="300">
+          <input type="number" name="weight" class="form-control" required min="20" max="300"
+          <?php
+              if(empty($_POST['fullName']))  echo "value='".$row['Weight']."'";
+           ?>
+          >
         </div>
         <div class="mb-3">
           <label class="form-label">Age</label>
-          <input type="number" name="age" class="form-control" required min="0" max="120">
+          <input type="number" name="age" class="form-control" required min="0" max="120"
+          <?php
+            if(empty($_POST['fullName']))  echo "value='".$row['Age']."'";
+           ?>
+          >
         </div>
         <select name="type" class="form-select mb-3-top" aria-label="Default select example">
           <option selected disabled>Choose diabetes type</option>
@@ -138,58 +164,57 @@ if(!isset($_SESSION['id']))
         </select>
           <div class="mb-3">
           <label class="form-label">Blood Pressure</label>
-          <input type="number" name="blood" class="form-control" required min="10" max="440">
+          <input type="number" name="blood" class="form-control" required min="10" max="440"
+          <?php
+            if(empty($_POST['fullName']))  echo "value='".$row['Blood_Pressure']."'";
+           ?>
+          >
         </div>
         <div class="mb-3 center">
-              <input type="submit" class="btn btn-outline-secondary" value="Add Profile" id="btn-form">
+              <input type="submit" class="btn btn-outline-secondary" value="Update Profile" id="btn-form">
         </div>
         <?php
-        if(!empty($_POST['fullName']))
-        {
-         $id=$_SESSION['id'];
-         $targetDirectory = 'uploads/';
-         if(!isset($_POST['image']))
-         {
-             $targetFile = $targetDirectory . 'default.png';
-         }
-         else{
-             $targetFile = $targetDirectory . basename($_FILES['image']['name']);
-             move_uploaded_file($_FILES['image']['tmp_name'], $targetFile); 
-         } 
-        
-       
-         $name=$_POST['fullName'];
-         $height=$_POST['height'];
-         $weight=$_POST['weight'];
-         $age=$_POST['age'];
-         $type=$_POST['type'];
-         $blood_pressure=$_POST['blood'];
-         $sugar_level=100;
-         $prediction_sugar=100;
-       
-         $query = "INSERT INTO tbl_203_patients (UserID,name,Type,Height,Weight,Age,Blood_Pressure,Img,Sugar_Level,Prediction_Level) VALUES ('$id', '$name','$type','$height','$weight', '$age', '$blood_pressure', '$targetFile','$sugar_level','$prediction_sugar')";
-         $result = mysqli_query($connection, $query);
-       
-         if ($result && mysqli_affected_rows($connection) > 0) 
-         {
-         
-            echo "<div class='alert alert-success' role='alert'>Add Patient Successfully!</div>";
-            echo "<script>setTimeout(function(){ window.location.href = '".URL."index.php'; }, 2000);</script>";
-            mysqli_close($connection);
-           
-            exit();
-          } else if(mysqli_affected_rows($connection) == 0) {
-            die ("Error inserting data: " . mysqli_error($connection));
-          }
+        if(!empty($_POST['fullName'])){
+            $id=$_GET['id'];
+            $targetDirectory = 'uploads/';
+            if(!isset($_POST['image']))
+            {
+                $targetFile = $targetDirectory . 'default.png';
+            }
+            else{
+                $targetFile = $targetDirectory . basename($_FILES['image']['name']);
+                move_uploaded_file($_FILES['image']['tmp_name'], $targetFile); 
+            } 
+            $name=$_POST['fullName'];
+            $height=$_POST['height'];
+            $weight=$_POST['weight'];
+            $age=$_POST['age'];
+            $type=$_POST['type'];
+            $blood_pressure=$_POST['blood'];
+            $sugar_level=100;
+            $prediction_sugar=100;
+          
+            $query1 = "UPDATE tbl_203_patients SET name = '$name', Height = '$height', Weight = '$weight', Age = '$age', Type = '$type', Blood_Pressure = '$blood_pressure',Img='$targetFile' WHERE PatientID = '$id'";
+            $result1 = mysqli_query($connection, $query1);
+            if ($result1 && mysqli_affected_rows($connection) > 0) 
+            {
+              echo "<div class='alert alert-success' role='alert'>Update Patient Successfully!</div>";
+              echo "<script>setTimeout(function(){ window.location.href = '".URL."index.php'; }, 2000);</script>";
+              mysqli_close($connection);
+             
+              exit();
+            } else if(mysqli_affected_rows($connection) == 0) 
+                    {
+                        echo "<div class='alert alert-danger' role='alert'>You entered the same values</div>";
+                    }
         }
         ?>
-       
     </form>
     </div>
   </main> 
   <footer class="footernoabs">
     <span>&copy; Copyright 2023 SmartSugar</span>   
   </footer>
-  <script src="js/Add.js"></script>
+  <script src="js/Update.js"></script>
 </body>
 </html>

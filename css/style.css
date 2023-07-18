@@ -82,7 +82,18 @@ header{
     gap: 27px !important;
     align-items: center;
 }
+.footernoabs{
+    position: absolute;
+}
+.btn-little{
+    display: flex !important;
+    justify-content: center;
+    align-self: center;
+    height: 30px;
+    width: 30px;
+}
 footer {
+    position: absolute;
     min-height: 44px;
     margin-top: 30.17vh;
     padding-left: 8px;
@@ -368,7 +379,10 @@ h1{
         display: flex;
         align-items: center;
         gap:1.76%;
-        width: 100%;
+    }
+    #deleteForm1{
+        gap: 10%;
+        display: flex;
     }
     .flex-data{
         display: flex;

@@ -2,6 +2,19 @@
 include "db.php";
 include "config.php";
 session_start();
+if (isset($_SESSION['id'])) {
+  $query="SELECT * FROM tbl_203_patients WHERE UserID=".$_SESSION['id']."";
+  $result=mysqli_query($connection,$query);
+
+  $query1="SELECT * FROM tbl_203_users WHERE id=".$_SESSION['id']."";
+  $result1=mysqli_query($connection,$query1);
+  $row1=mysqli_fetch_assoc($result1);
+  
+} else {
+  header('Location: ' .URL. 'login.php');
+  
+}
+
 ?> 
 <!DOCTYPE html>
 <html lang="en">
@@ -96,19 +109,10 @@ session_start();
         <a href="#" class="material-symbols-outlined" >
             <span class="material-symbols-outlined">settings</span>
         </a>
-        <a href="#" id="circle"></a>
+        <a href="#" id="circle" <?php echo "style='background-image:url(".$row1['img'].")'"?>></a>
     </div>
 </header>
   <main>
-    <?php
-    if (isset($_SESSION['id'])) {
-      $query="SELECT * FROM tbl_203_patients WHERE UserID=".$_SESSION['id']."";
-      $result=mysqli_query($connection,$query);
-    } else {
-      header('Location: ' .URL. 'login.php');
-      
-    }
-    ?>
 
   
     <div class="container size-cf">
@@ -118,33 +122,23 @@ session_start();
     <div class="btn-div">
       <button class="btn btn-style" title="Add Profile" onclick="window.location.href = 'Add_Patient.php';">+ Add Profile</button>
     </div>
-    <?php
-   
-    if(!empty($query))
-    {
-      echo  "<div class='small'>";
-      while($row=mysqli_fetch_assoc($result))
-      {
-
-       echo "<div class='profile-small'>
-          <div class='cover'>
-              <img src=".$row['Img']." width='48' height='48' alt='' style='border-radius: 50%;'>
-              <div class='data'>
-                <span id='bold'>".$row['name']."</span>
-                <div class='flex-data'>
-                    <span>type ".$row['Type']."</span>
-                    <span id='network-small'></span>
-                    <span>".$row['Sugar_Level']." mg/dL</span>
-                </div>
-              </div>
-            </div>
-          <button class='btn btn-style'>Edit</button>
-        </div>";
-      }
-     echo "</div>";
-    }
-    ?>
-   
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this patient?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-danger" id="delete">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
     <?php
     if (isset($_SESSION['id'])) {
       $query="SELECT * FROM tbl_203_patients WHERE UserID=".$_SESSION['id']."";
@@ -158,6 +152,46 @@ session_start();
    
     if(!empty($query))
     {
+      echo  "<div class='small'>";
+      while($row=mysqli_fetch_assoc($result))
+      {
+
+       echo "<div class='profile-small'>
+          <div class='cover'  onclick=\"window.location.href='2.html';\">
+              <img src=".$row['Img']." width='48' height='48' alt='' style='border-radius: 50%;'>
+              <div class='data'>
+                <span id='bold'>".$row['name']."</span>
+                <div class='flex-data'>
+                    <span>type ".$row['Type']."</span>
+                    <span id='network-small'></span>
+                    <span>".$row['Sugar_Level']." mg/dL</span>
+                </div>
+              </div>
+            </div>
+            <form action='index.php' method='POST' class='deleteForm1'>
+            <input type='hidden' name='profileID' value='".$row['PatientID']."'>
+            <button type='button' class='btn btn-secondary rounded-circle btn-little'  onclick=\"window.location.href='Update_Patient.php?id=".$row['PatientID']."';\" data-toggle='tooltip' data-placement='top' title='Edit User'><i class='fas fa-pen'></i></button>
+            <button type='submit' class='btn btn-danger rounded-circle btn-little' data-toggle='tooltip' data-placement='top' title='Delete User'><i class='fas fa-times'></i></button>
+          </form>
+        </div>";
+      }
+     echo "</div>";
+    }
+    ?>
+   
+    <?php
+     if (isset($_SESSION['id'])) {
+      $query="SELECT * FROM tbl_203_patients WHERE UserID=".$_SESSION['id']."";
+      $result=mysqli_query($connection,$query);
+    
+     
+    } else {
+      header('Location: ' .URL. 'login.php');
+      
+    }
+
+    if(!empty($query))
+    {
     echo "<div class='container big'>
         <div class='row'>
           <div class='col-1'>ID</div>
@@ -169,11 +203,10 @@ session_start();
         </div>";
         while($row=mysqli_fetch_assoc($result))
         {
-        echo
-          "<div class='row row-profile' onclick=\'window.location.href = '2.html';'>
-            <div class='col-1'>".$row['PatientID']."</div>
+        echo "<div class='row row-profile'>
+        <div class='col-1'>".$row['PatientID']."</div>
             <div class='col-3'>
-              <img src=".$row['Img']." width='48' height='48' alt='' style='border-radius: 50%' onclick=\'window.location.href = '2.html';'>
+              <img src=".$row['Img']." width='48' height='48' alt='' style='border-radius: 50%'>
               ".$row['name']."
             </div>            
             <div class='col-1'>".$row['Type']."</div>
@@ -182,13 +215,37 @@ session_start();
               <span id='network'></span>
             </div>
             <div class='col-3'>
-              <button class='custom-bg-color' title='Select User' onclick=\'window.location.href = '2.html';'>Select</button>
-              <button class='btn btn-secondary rounded-circle' data-toggle='tooltip' data-placement='top' title='Edit User'><i class='fas fa-pen'></i></button>
-              <button class='btn btn-danger rounded-circle' data-toggle='tooltip' data-placement='top' title='Delete User'><i class='fas fa-times'></i></button>
+            <form action='index.php' method='POST' class='deleteForm'>
+              <input type='hidden' name='profileID' value='".$row['PatientID']."'>
+              <button type='button' class='custom-bg-color' title='Select User' onclick=\"window.location.href='2.html';\">Select</button>
+              <button type='button' class='btn btn-secondary rounded-circle'  onclick=\"window.location.href='Update_Patient.php?id=".$row['PatientID']."';\" data-toggle='tooltip' data-placement='top' title='Edit User'><i class='fas fa-pen'></i></button>
+              <button type='submit' class='btn btn-danger rounded-circle' data-toggle='tooltip' data-placement='top' title='Delete User'><i class='fas fa-times'></i></button>
+            </form>
             </div>
           </div>";
         }
         echo "</div>";
+      }
+      if (isset($_POST['profileID'])) {
+        
+        $profileID = $_POST['profileID'];
+
+    
+        // SQL query to delete the profile with the given ID
+        $deleteQuery = "DELETE FROM tbl_203_patients WHERE PatientID = '$profileID'";
+        
+        // Execute the delete query
+        $deleteResult = mysqli_query($connection, $deleteQuery);
+    
+        if ($deleteResult) {
+          echo "<div class='alert alert-success' role='alert'>Profile deleted successfully!</div>";
+          echo "<script>setTimeout(function(){ window.location.href = '".URL."index.php'; },0);</script>";
+            // Deletion successful
+            
+        } else {
+            // Error occurred during deletion
+           die("Error deleting profile:". mysqli_error($connection));
+        }
       }
     ?>
     </main>
