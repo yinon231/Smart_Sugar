@@ -83,6 +83,11 @@ if (isset($_SESSION['id'])) {
                     <span class="material-symbols-outlined icons-nav">settings</span>
                     Settings
                 </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
               </li>
           </ul>
         </div>
@@ -117,15 +122,10 @@ if (isset($_SESSION['id'])) {
     <h1 id ="profiles_text">Profiles</h1>
     <h3 id ="List_text">List Of Your Patients</h3>
     <?php
-    if (isset($_POST['profileID'])) {
+    if (isset($_POST['PatientID'])) {
         
-        $profileID = $_POST['profileID'];
-
-    
-        // SQL query to delete the profile with the given ID
-        $deleteQuery = "DELETE FROM tbl_203_patients WHERE PatientID = '$profileID'";
-        
-        // Execute the delete query
+        $patientID = $_POST['PatientID'];
+        $deleteQuery = "DELETE FROM tbl_203_patients WHERE PatientID = '$patientID'";
         $deleteResult = mysqli_query($connection, $deleteQuery);
     
         if ($deleteResult) {
@@ -190,7 +190,7 @@ if (isset($_SESSION['id'])) {
               </div>
             </div>
             <form action='index.php' method='POST' class='deleteForm1'>
-            <input type='hidden' name='profileID' value='".$row['PatientID']."'>
+            <input type='hidden' name='PatientID' value='".$row['PatientID']."'>
             <button type='button' class='btn btn-secondary rounded-circle btn-little'  onclick=\"window.location.href='Update_Patient.php?id=".$row['PatientID']."';\" data-toggle='tooltip' data-placement='top' title='Edit User'><i class='fas fa-pen'></i></button>
             <button type='submit' class='btn btn-danger rounded-circle btn-little' data-toggle='tooltip' data-placement='top' title='Delete User'><i class='fas fa-times'></i></button>
           </form>
@@ -237,7 +237,7 @@ if (isset($_SESSION['id'])) {
             </div>
             <div class='col-3'>
             <form action='index.php' method='POST' class='deleteForm'>
-              <input type='hidden' name='profileID' value='".$row['PatientID']."'>
+              <input type='hidden' name='PatientID' value='".$row['PatientID']."'>
               <button type='button' class='custom-bg-color' title='Select User' onclick=\"window.location.href='2.html';\">Select</button>
               <button type='button' class='btn btn-secondary rounded-circle'  onclick=\"window.location.href='Update_Patient.php?id=".$row['PatientID']."';\" data-toggle='tooltip' data-placement='top' title='Edit User'><i class='fas fa-pen'></i></button>
               <button type='submit' class='btn btn-danger rounded-circle' data-toggle='tooltip' data-placement='top' title='Delete User'><i class='fas fa-times'></i></button>
