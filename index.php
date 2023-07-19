@@ -113,11 +113,32 @@ if (isset($_SESSION['id'])) {
     </div>
 </header>
   <main>
-
-  
     <div class="container size-cf">
     <h1 id ="profiles_text">Profiles</h1>
     <h3 id ="List_text">List Of Your Patients</h3>
+    <?php
+    if (isset($_POST['profileID'])) {
+        
+        $profileID = $_POST['profileID'];
+
+    
+        // SQL query to delete the profile with the given ID
+        $deleteQuery = "DELETE FROM tbl_203_patients WHERE PatientID = '$profileID'";
+        
+        // Execute the delete query
+        $deleteResult = mysqli_query($connection, $deleteQuery);
+    
+        if ($deleteResult) {
+          echo "<div class='alert alert-success' role='alert'>Profile deleted successfully!</div>";
+          echo "<script>setTimeout(function(){ window.location.href = '".URL."index.php'; },0);</script>";
+            // Deletion successful
+            
+        } else {
+            // Error occurred during deletion
+           die("Error deleting profile:". mysqli_error($connection));
+        }
+      }
+      ?>
     <input type="text" class="form-control search" placeholder="  Search" width="40px">
     <div class="btn-div">
       <button class="btn btn-style" title="Add Profile" onclick="window.location.href = 'Add_Patient.php';">+ Add Profile</button>
@@ -226,27 +247,7 @@ if (isset($_SESSION['id'])) {
         }
         echo "</div>";
       }
-      if (isset($_POST['profileID'])) {
-        
-        $profileID = $_POST['profileID'];
-
-    
-        // SQL query to delete the profile with the given ID
-        $deleteQuery = "DELETE FROM tbl_203_patients WHERE PatientID = '$profileID'";
-        
-        // Execute the delete query
-        $deleteResult = mysqli_query($connection, $deleteQuery);
-    
-        if ($deleteResult) {
-          echo "<div class='alert alert-success' role='alert'>Profile deleted successfully!</div>";
-          echo "<script>setTimeout(function(){ window.location.href = '".URL."index.php'; },0);</script>";
-            // Deletion successful
-            
-        } else {
-            // Error occurred during deletion
-           die("Error deleting profile:". mysqli_error($connection));
-        }
-      }
+     
     ?>
     </main>
     <footer>
