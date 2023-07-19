@@ -11,6 +11,10 @@ function readURL(input) {
 }
 
 $(document).ready(function() {
+  $('#settings').click(function(e) {
+    e.preventDefault();
+    $('.dropdown-menu').toggle();
+});
   $("#imageUpload").change(function() {
     console.log(1);
     readURL(this);
