@@ -1,0 +1,100 @@
+body {
+	font-family: 'Assistant', sans-serif;
+	margin:20px;
+}
+
+.logo-title {
+	background:-webkit-linear-gradient(#3E5D75,#3E5D75);
+	color:#fff;
+	padding:10px 0px;
+	border-radius:6px;
+	font-weight:100;
+}
+
+#menu {
+	margin-top:30px;
+}
+	
+.card {
+	text-align:center;
+}
+
+
+.card-img-top1 {
+	background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZoqZ3OLW2NsK6v4lpit-wlMPbLbKYpL8TOQ&usqp=CAU');
+	background-position: center center;
+	background-size: cover;
+	width: 100%;
+	height: 300px;
+	
+	transition: 1s;
+  }
+  .card-img-top2 {
+	background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_HOSVzgJGBIkreP2n8yrcpU5b_OON_t7mkw&usqp=CAU');
+	background-position: center center;
+	background-size: cover;
+	width: 100%;
+	height: 300px;
+	transition: 1s;
+  }
+  .card-img-top3 {
+	background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkT6R5CsPzp9zTOFn56AfRH_Y6bNFUeFSOKw&usqp=CAU');
+	background-position: center center;
+	background-size: cover;
+	width: 100%;
+	height: 300px;
+	transition: 1s;
+  }
+  .card-img-top4 {
+	background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8U4NSs_G71cY5y55cnpxNY6Wp3XeRZdJglQ&usqp=CAU');
+	background-position: center center;
+	background-size: cover;
+	width: 100%;
+	height: 300px;
+	transition: 1s;
+  }
+
+.form-group {
+	display:inline-block;
+	width:calc(50% - 2px);
+}
+
+.btn-primary {
+	width:100%;
+	font-weight:900;
+	font-size:18px;
+	margin-top:-6px;
+	background:#0086d8;
+	border:0;
+}
+
+.form-control {
+	text-align:center;
+}
+
+.btn-save-meal {
+	font-size:12px;
+	font-weight:500;
+}
+
+.search-results-container {
+background-color: white;
+border: 1px solid #ccc;
+padding: 10px;
+z-index: 1;
+position:absolute;
+width:553px;
+margin-top:4px;
+border-radius:4px;
+display:none;
+max-width:40%;
+}
+
+@media only screen and (max-width: 600px) {
+  .search-results-container {
+	  max-width:100%;
+	  width:calc(100% - 20px);
+	  left:10px;
+	  margin-top:8px;
+  }
+}

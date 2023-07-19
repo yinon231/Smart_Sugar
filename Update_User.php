@@ -2,13 +2,14 @@
 include "db.php";
 include "config.php";
 session_start();
-$id=$_GET['id'];
 if (isset($_SESSION['id'])) {
-   if(empty($_POST['fullName']))
+    $id=$_SESSION['id'];
+   if(empty($_POST['fullname']))
    {
-        $query="SELECT * FROM tbl_203_patients WHERE PatientID=".$_GET['id']."";
+        $query="SELECT * FROM tbl_203_users WHERE id=".$_SESSION['id']."";
         $result=mysqli_query($connection,$query);
         $row=mysqli_fetch_assoc($result);
+        $type=$row['user_type'];
    }
 } else {
   header('Location: ' .URL. 'login.php');
@@ -30,12 +31,22 @@ if (isset($_SESSION['id'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="js/script.js"></script>
-    <title>Document</title>
+    <title>Update User</title>
 </head>
 <body>
 <header>
-    <a href="#" id="logo"></a>
+    <?php
+     if($_SESSION['user_type']=="admin")
+     {
+      echo "<a href='index.php' id='logo'></a>";
+     }
+     else
+     {
+      echo "<a href='#' id='logo'></a>";
+     }
+    ?>
+ 
+  
     <button class="navbar-toggler" type="button" id="btn-hamburger" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
         <span class="material-symbols-outlined">menu</span>
       </button>
@@ -47,10 +58,15 @@ if (isset($_SESSION['id'])) {
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
               <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <span class="material-symbols-outlined icons-nav">person</span>
+                <?php 
+              if($_SESSION['user_type']=="admin")
+                {
+                    echo "<a class='nav-link' href='index.php'>
+                        <span class='material-symbols-outlined icons-nav'>person</span>
                         My Profiles
-                    </a>
+                    </a>";
+                }
+                    ?>
               </li>
               <li class="nav-item">
                     <a class="nav-link" href="#">
@@ -88,9 +104,16 @@ if (isset($_SESSION['id'])) {
       </div>
     </div>
     <ul class="nav nav-underline">
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="#">My Profiles</a>
-        </li>
+      <?php
+      if($_SESSION['user_type']=="admin")
+      {
+       echo "<li class='nav-item'>
+        <a class='nav-link' aria-current='page' href='index.html'>My Profiles</a>
+       </li>";
+      }
+
+      ?>
+     
         <li class="nav-item">
           <a class="nav-link" href="#">News&Update</a>
         </li>
@@ -101,7 +124,7 @@ if (isset($_SESSION['id'])) {
           <a class="nav-link" href="#">Contact</a>
         </li>
       </ul>
-    <div id="flex-icons">
+      <div id="flex-icons">
         <a href="Update_User.php" class="material-symbols-outlined" >
             <span class="material-symbols-outlined">settings</span>
         </a>
@@ -113,61 +136,46 @@ if (isset($_SESSION['id'])) {
 </header>
   <main>
   <div class="container-fluid add">
-  <h1>Update Patient</h1>
-  <form action="" method="post" enctype="multipart/form-data" id="update">
-        <div class="avatar-upload">
-          <div class="avatar-preview">
-            <div class="avatar-edit">
-              <label id="pencil" for="imageUpload"></label>
-              <input name="image" type='file' id="imageUpload" accept=".png, .jpg, .jpeg"  />
-            </div>
-              <div id="imagePreview" <?php if(empty($_POST['fullName'])) echo "style='background-image:url(".$row['Img'].")'" ?>
-              ></div>
-          </div>
-        </div>
+  <h1>Update User</h1>
+  <form action="" method="post" enctype="multipart/form-data" id="update_User">
+    
         <div class="mb-3">
-            <label class="form-label">Full Name</label>
-            <input type="text" name="fullName" class="form-control" id="fullName" pattern="^[A-Za-z]+(?:\s[A-Za-z]+)+$" required title="Please enter a valid name (letters and spaces only)"
+        <label for="fullname" class="form-label ">Full name</label>
+        <input type="text" class="form-control" name="fullname" id="fullname" pattern="^[A-Za-z]+(?:\s[A-Za-z]+)+$" required
             <?php
-              if(empty($_POST['fullName'])) echo "value='".$row['name']."'";
+              if(empty($_POST['fullname'])) echo "value='".$row['name']."'";
             ?>
-             required>
+             >
         </div> 
         <div class="mb-3">
-            <label class="form-label">Height</label>
-            <input type="number" name="height" class="form-control" required min="70" max="250"
+        <label for="password" class="form-label ">Password</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="***" required
             <?php
-              if(empty($_POST['fullName'])) echo "value='".$row['Height']."'";
+              if(empty($_POST['fullname'])) echo "value='".$row['password']."'";
             ?>
             >
         </div>
         <div class="mb-3">
-          <label class="form-label">Weight</label>
-          <input type="number" name="weight" class="form-control" required min="20" max="300"
+        <label for="email" class="form-label ">Email address</label>
+        <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required
           <?php
-              if(empty($_POST['fullName']))  echo "value='".$row['Weight']."'";
+              if(empty($_POST['fullname']))  echo "value='".$row['email']."'";
            ?>
           >
         </div>
         <div class="mb-3">
-          <label class="form-label">Age</label>
-          <input type="number" name="age" class="form-control" required min="0" max="120"
+        <label for="formFileSm" class="form-label">Choose image</label>
+        <input  name="img" class="form-control form-control-sm" id="formFileSm" type="file" accept=".png, .jpg, .jpeg"
           <?php
-            if(empty($_POST['fullName']))  echo "value='".$row['Age']."'";
+            if(empty($_POST['fullname']))  echo "value='".$row['img']."'";
            ?>
           >
         </div>
-        <select name="type" class="form-select mb-3-top" aria-label="Default select example">
-          <option selected disabled>Choose diabetes type</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="Pre-Diabetes">Pre-Diabetes</option>
-        </select>
-          <div class="mb-3">
-          <label class="form-label">Blood Pressure</label>
-          <input type="number" name="blood" class="form-control" required min="10" max="440"
+        <div class="mb-3">
+                <label for="phone" class="form-label ">Phone</label>
+                <input type="tel" class="form-control" id="phone" name="phone" required
           <?php
-            if(empty($_POST['fullName']))  echo "value='".$row['Blood_Pressure']."'";
+            if(empty($_POST['fullname']))  echo "value='".$row['phone']."'";
            ?>
           >
         </div>
@@ -175,32 +183,41 @@ if (isset($_SESSION['id'])) {
               <input type="submit" class="btn btn-outline-secondary" value="Update Profile" id="btn-form">
         </div>
         <?php
-        if(!empty($_POST['fullName'])){
-            $id=$_GET['id'];
-            $targetDirectory = 'uploads/';
-            if(!isset($_POST['image']))
-            {
-                $targetFile = $targetDirectory . 'default.png';
-            }
-            else{
-                $targetFile = $targetDirectory . basename($_FILES['image']['name']);
-                move_uploaded_file($_FILES['image']['tmp_name'], $targetFile); 
-            } 
-            $name=$_POST['fullName'];
-            $height=$_POST['height'];
-            $weight=$_POST['weight'];
-            $age=$_POST['age'];
-            $type=$_POST['type'];
-            $blood_pressure=$_POST['blood'];
-            $sugar_level=100;
-            $prediction_sugar=100;
+        if(!empty($_POST['fullname'])){
+          $fullname=$_POST['fullname'];
+          $email=$_POST['email'];
+          $password=$_POST['password'];
+          $targetDirectory = 'uploads/';
+          if (isset($_FILES['img']) && !empty($_FILES['img']['name'])) {
+            $targetFile = $targetDirectory . basename($_FILES['img']['name']);
+            move_uploaded_file($_FILES['img']['tmp_name'], $targetFile);
+          } else {
+            $targetFile = $targetDirectory . 'default.png';
           
-            $query1 = "UPDATE tbl_203_patients SET name = '$name', Height = '$height', Weight = '$weight', Age = '$age', Type = '$type', Blood_Pressure = '$blood_pressure',Img='$targetFile' WHERE PatientID = '$id'";
+          }
+          $_SESSION['img']=$targetFile;
+        
+          $phone=$_POST['phone'];
+          $query1="UPDATE tbl_203_users SET name = '$fullname', email = '$email', password = '$password', img = '$targetFile', phone = '$phone'  WHERE id = '$id'";
             $result1 = mysqli_query($connection, $query1);
             if ($result1 && mysqli_affected_rows($connection) > 0) 
             {
-              echo "<div class='alert alert-success' role='alert'>Update Patient Successfully!</div>";
+              echo "<div class='alert alert-success' role='alert'>Update user Successfully!</div>";
+              if($_SESSION['user_type']=="admin")
+              {
               echo "<script>setTimeout(function(){ window.location.href = '".URL."index.php'; }, 2000);</script>";
+              }
+              else
+              {
+                $query2="SELECT PatientID FROM tbl_203_patients WHERE name='".$fullname."'";
+                $result2=mysqli_query($connection,$query2);
+                $row2=mysqli_fetch_array($result2);
+                if($row2)
+                {
+                  echo "<script>setTimeout(function(){ window.location.href = 'patient.php?id=".$row2['PatientID']."'; }, 2000);</script>";
+                }
+              } 
+
               mysqli_close($connection);
              
               exit();
@@ -216,6 +233,6 @@ if (isset($_SESSION['id'])) {
   <footer class="footernoabs">
     <span>&copy; Copyright 2023 SmartSugar</span>   
   </footer>
-  <script src="js/Update.js"></script>
+  <script src="js/Update_User.js"></script>
 </body>
 </html>

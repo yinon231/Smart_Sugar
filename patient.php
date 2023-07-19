@@ -4,13 +4,9 @@ include "config.php";
 session_start();
 if(isset($_SESSION['id']))
 {
-  $query="SELECT * FROM tbl_203_patients INNER JOIN tbl_203_Diabetes_Type ON tbl_203_patients.Type=tbl_203_Diabetes_Type.Type  WHERE PatientID=".$_GET['id']."";
+  $query="SELECT tbl_203_patients.*, tbl_203_Diabetes_Type.Recommended FROM tbl_203_patients INNER JOIN tbl_203_Diabetes_Type ON tbl_203_patients.Type = tbl_203_Diabetes_Type.Type WHERE PatientID = ".$_GET['id'].""; 
   $result=mysqli_query($connection,$query);
   $row=mysqli_fetch_assoc($result);
-
-  $query1="SELECT * FROM tbl_203_users WHERE id=".$_SESSION['id']."";
-  $result1=mysqli_query($connection,$query1);
-  $row1=mysqli_fetch_assoc($result1); 
 } 
 else 
 {
@@ -26,6 +22,8 @@ else
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css/2.css">
+    <link rel="stylesheet" href="css/stylecanvas.scss">
+
     <link href="https://fonts.googleapis.com/css?family=Amiko:regular,600,700" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <script src="https://kit.fontawesome.com/d3946a3283.js" crossorigin="anonymous"></script>
@@ -42,7 +40,18 @@ else
 
 <body>
   <header>
-    <a href="index.html" id="logo"></a>
+    <?php
+     if($_SESSION['user_type']=="admin")
+     {
+      echo "<a href='index.php' id='logo'></a>";
+     }
+     else
+     {
+      echo "<a href='#' id='logo'></a>";
+     }
+    ?>
+ 
+  
     <button class="navbar-toggler" type="button" id="btn-hamburger" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
         <span class="material-symbols-outlined">menu</span>
       </button>
@@ -54,10 +63,15 @@ else
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
               <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <span class="material-symbols-outlined icons-nav">person</span>
+                <?php 
+              if($_SESSION['user_type']=="admin")
+                {
+                    echo "<a class='nav-link' href='index.php'>
+                        <span class='material-symbols-outlined icons-nav'>person</span>
                         My Profiles
-                    </a>
+                    </a>";
+                }
+                    ?>
               </li>
               <li class="nav-item">
                     <a class="nav-link" href="#">
@@ -79,15 +93,15 @@ else
              </li> 
               <a class="horizontal-line" href="#"></a>
               <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="material-symbols-outlined icons-nav">notifications</span>
-                    Notifications
+                <a class="nav-link" href="Update_User.php">
+                    <span class="material-symbols-outlined icons-nav">settings</span>
+                    Settings
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="material-symbols-outlined icons-nav">settings</span>
-                    Settings
+                <a class="nav-link" href="logout.php">
+                    <span class="material-symbols-outlined icons-nav">logout</span>
+                    Logout
                 </a>
               </li>
           </ul>
@@ -95,9 +109,16 @@ else
       </div>
     </div>
     <ul class="nav nav-underline">
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="index.html">My Profiles</a>
-        </li>
+      <?php
+      if($_SESSION['user_type']=="admin")
+      {
+       echo "<li class='nav-item'>
+        <a class='nav-link' aria-current='page' href='index.html'>My Profiles</a>
+       </li>";
+      }
+
+      ?>
+     
         <li class="nav-item">
           <a class="nav-link" href="#">News&Update</a>
         </li>
@@ -108,38 +129,18 @@ else
           <a class="nav-link" href="#">Contact</a>
         </li>
       </ul>
-    <div id="flex-icons">
-        <a href="#" class="material-symbols-outlined" >
-            <span class="material-symbols-outlined">notifications</span>
-        </a>
-        <a href="#" class="material-symbols-outlined" >
+      <div id="flex-icons">
+        <a href="Update_User.php" class="material-symbols-outlined" >
             <span class="material-symbols-outlined">settings</span>
         </a>
-        <a href="#" id="circle" <?php echo "style='background-image:url(".$row1['img'].")'"?>></a>
+        <a href="logout.php" class="material-symbols-outlined" >
+        <span class="material-symbols-outlined">logout</span>
+        </a>
+        <a href="#" id="circle" <?php if(isset($_SESSION['img'])) echo "style='background-image:url(".$_SESSION['img'].")'"; else echo 'style=\'background-image:url("images/default.png")\'';?>></a>
     </div>
 </header>
 <main>
         <div class="wrapper">
-          <!-- <div class="sidebar">
-              <br>
-              <br>
-              <div class="dropdown">
-                <button class="dropbtn">Meir Horowitz</button><i class="fa-sharp fa-solid fa-sort-down" style="color: #ffffff;"></i>
-                <ul class="dropdown-content">
-                  <li><a href="#">Meir Horowitz</a></li>
-                  <li><a href="#">Profile 2</a></li>
-                  <li><a href="#">Item 3</a></li>
-                </ul>
-              </div>
-              <ul>
-                  <li><a href="#"><i class="fas fa-chart-column" style="color: #ffffff;"></i>Dashboard</a></li>
-                  <li><a href="#"><i class="fas fa-apple-whole" style="color: #ffffff;"></i>Nutrition</a></li>
-                  <li><a href="#"><i class="fas fa-calendar-days" style="color: #ffffff;"></i>View Previous Data</a></li>
-                  <li><a href="#"><i class="fas fa-chart-line" style="color: #ffffff;"></i>Prediction</a></li>
-                  <li><a href="#"><i class="fas fa-user "style="color: #ffffff;"></i>Edit</a></li>
-              </ul> 
-          </div> -->
-        
          <div class="container">
           <h1>Dashboard</h1>
           <h3>Track your patient</h3>
@@ -157,7 +158,7 @@ else
                     <span class="subject1"><?php echo $row['Sensor'] ?> %</span>
                     <span class="subject1"><i class="fa-sharp fa-solid fa-circle-check" style="color: #52eb00;"></i></span>
                 </div>
-                <img src="images/meir.png" alt="Example Image" width="48" height="48" class="photo">
+                <img src=<?php echo "".$row['Img']."";?> alt="Example Image" width="48" height="48" class="photo">
                 <p class="text_realtime">Real-Time</p>
                 <div class="flex">
                   <div class="circle_madad">

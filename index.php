@@ -4,12 +4,7 @@ include "config.php";
 session_start();
 if (isset($_SESSION['id'])) {
   $query="SELECT * FROM tbl_203_patients WHERE UserID=".$_SESSION['id']."";
-  $result=mysqli_query($connection,$query);
-
-  $query1="SELECT * FROM tbl_203_users WHERE id=".$_SESSION['id']."";
-  $result1=mysqli_query($connection,$query1);
-  $row1=mysqli_fetch_assoc($result1);
-  
+  $result=mysqli_query($connection,$query);  
 } else {
   header('Location: ' .URL. 'login.php');
   
@@ -25,6 +20,7 @@ if (isset($_SESSION['id'])) {
     <link href="https://fonts.googleapis.com/css?family=Amiko:regular,600,700" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/stylecanvas.scss">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -32,6 +28,8 @@ if (isset($_SESSION['id'])) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <title>Document</title>
 </head>
 <body>
@@ -73,15 +71,15 @@ if (isset($_SESSION['id'])) {
              </li> 
               <a class="horizontal-line" href="#"></a>
               <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="material-symbols-outlined icons-nav">notifications</span>
-                    Notifications
+                <a class="nav-link" href="Update_User.php">
+                    <span class="material-symbols-outlined icons-nav">settings</span>
+                    Settings
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="material-symbols-outlined icons-nav">settings</span>
-                    Settings
+                <a class="nav-link" href="logout.php">
+                    <span class="material-symbols-outlined icons-nav">logout</span>
+                    Logout
                 </a>
               </li>
           </ul>
@@ -103,13 +101,13 @@ if (isset($_SESSION['id'])) {
         </li>
       </ul>
     <div id="flex-icons">
-        <a href="#" class="material-symbols-outlined" >
-            <span class="material-symbols-outlined">notifications</span>
-        </a>
-        <a href="#" class="material-symbols-outlined" >
+        <a href="Update_User.php" class="material-symbols-outlined" >
             <span class="material-symbols-outlined">settings</span>
         </a>
-        <a href="#" id="circle" <?php echo "style='background-image:url(".$row1['img'].")'"?>></a>
+        <a href="logout.php" class="material-symbols-outlined" >
+        <span class="material-symbols-outlined">logout</span>
+        </a>
+        <a href="#" id="circle" <?php if(isset($_SESSION['img'])) echo "style='background-image:url(".$_SESSION['img'].")'"; else echo 'style=\'background-image:url("images/default.png")\'';?>></a>
     </div>
 </header>
   <main>
@@ -159,8 +157,7 @@ if (isset($_SESSION['id'])) {
     if (isset($_SESSION['id'])) {
       $query="SELECT * FROM tbl_203_patients WHERE UserID=".$_SESSION['id']."";
       $result=mysqli_query($connection,$query);
-    
-     
+  
     } else {
       header('Location: ' .URL. 'login.php');
       
@@ -236,6 +233,7 @@ if (isset($_SESSION['id'])) {
               <button type='button' class='custom-bg-color' title='Select User' onclick=\"window.location.href='patient.php?id=".$row['PatientID']."';\">Select</button>
               <button type='button' class='btn btn-secondary rounded-circle'  onclick=\"window.location.href='Update_Patient.php?id=".$row['PatientID']."';\" data-toggle='tooltip' data-placement='top' title='Edit User'><i class='fas fa-pen'></i></button>
               <button type='submit' class='btn btn-danger rounded-circle' data-toggle='tooltip' data-placement='top' title='Delete User'><i class='fas fa-times'></i></button>
+
             </form>
             </div>
           </div>";

@@ -11,8 +11,24 @@ if(!empty($_POST['email']))
   $row=mysqli_fetch_array($result);
   if(is_array($row))
   {
+   $name=$row['name'];
    $_SESSION['id']=$row['id'];
-    header('Location: ' .URL. 'index.php');
+   $_SESSION['img']=$row['img'];
+   $_SESSION['user_type']=$row['user_type'];
+   if($_SESSION['user_type']=="admin")
+      header('Location: ' .URL. 'index.php');
+   else
+   {
+    $query1="SELECT PatientID FROM tbl_203_patients WHERE name='".$name."'";
+    $result1=mysqli_query($connection,$query1);
+    $row1=mysqli_fetch_array($result1);
+    if($row1)
+    {
+    header('Location: ' .URL. 'patient.php?id='.$row1['PatientID'].'');
+    }
+    else $message="You Haven't patient profile";
+
+   }
 
   }
   else
@@ -28,7 +44,7 @@ if(!empty($_POST['email']))
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bootstrap 5 Login form Page</title>
+    <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   </head>
 
@@ -57,7 +73,7 @@ if(!empty($_POST['email']))
               </div>
             </form>
             <div>
-              <p class="mb-0  text-center">Don't have an account? <a href="signup.html"
+              <p class="mb-0  text-center">Don't have an account? <a href="register.php"
                   class="text-primary fw-bold">Sign
                   Up</a></p>
                  
