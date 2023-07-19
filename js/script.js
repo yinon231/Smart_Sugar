@@ -21,8 +21,6 @@ $(document).ready(function() {
   });
 });
 
-// search //
-
 // Get the search input element
 const searchInput = document.querySelector("#search");
 if (searchInput) {

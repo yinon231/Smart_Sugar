@@ -44,6 +44,7 @@ header{
     height: 50px;
     margin-left: 1.94444vw;
 }
+
 .material-symbols-outlined{
     color: #ffff;
     fill: #ffff;
@@ -68,6 +69,7 @@ header{
     background-position: center;
     border-radius: 40px;
 }
+
 .nav{
     width: auto;
     background-color: #1D3649;;

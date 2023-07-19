@@ -166,8 +166,8 @@ if(!isset($_SESSION['id']))
          $blood_pressure=$_POST['blood'];
          $sugar_level=100;
          $prediction_sugar=100;
-       
-         $query = "INSERT INTO tbl_203_patients (UserID,name,Type,Height,Weight,Age,Blood_Pressure,Img,Sugar_Level,Prediction_Level) VALUES ('$id', '$name','$type','$height','$weight', '$age', '$blood_pressure', '$targetFile','$sugar_level','$prediction_sugar')";
+         $sensor=100;
+         $query = "INSERT INTO tbl_203_patients (UserID,name,Type,Height,Weight,Age,Blood_Pressure,Img,Sugar_Level,Prediction_Level,Sensor) VALUES ('$id', '$name','$type','$height','$weight', '$age', '$blood_pressure', '$targetFile','$sugar_level','$prediction_sugar','$sensor')";
          $result = mysqli_query($connection, $query);
        
          if ($result && mysqli_affected_rows($connection) > 0) 

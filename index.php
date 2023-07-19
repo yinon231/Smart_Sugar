@@ -78,17 +78,20 @@ if (isset($_SESSION['id'])) {
                     Notifications
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="material-symbols-outlined icons-nav">settings</span>
-                    Settings
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item dropdown">              
+                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">                      <span class="material-symbols-outlined icons-nav">settings</span>
+                          Settings
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="settings">
+                          <li><a class="dropdown-item" href="#">Action</a></li>
+                          <li><a class="dropdown-item" href="#">Another action</a></li>
+                          <li><a class="dropdown-item" href="#">Something else here</a></li>
+                      </ul>
+                  </li>
                 </ul>
-              </li>
+              </div>
           </ul>
         </div>
       </div>
@@ -178,7 +181,7 @@ if (isset($_SESSION['id'])) {
       {
 
        echo "<div class='profile-small'>
-          <div class='cover'  onclick=\"window.location.href='2.html';\">
+          <div class='cover' onclick=\"window.location.href='patient.php?id=".$row['PatientID']."';\">
               <img src=".$row['Img']." width='48' height='48' alt='' style='border-radius: 50%;'>
               <div class='data'>
                 <span id='bold'>".$row['name']."</span>
@@ -238,7 +241,7 @@ if (isset($_SESSION['id'])) {
             <div class='col-3'>
             <form action='index.php' method='POST' class='deleteForm'>
               <input type='hidden' name='PatientID' value='".$row['PatientID']."'>
-              <button type='button' class='custom-bg-color' title='Select User' onclick=\"window.location.href='2.html';\">Select</button>
+              <button type='button' class='custom-bg-color' title='Select User' onclick=\"window.location.href='patient.php?id=".$row['PatientID']."';\">Select</button>
               <button type='button' class='btn btn-secondary rounded-circle'  onclick=\"window.location.href='Update_Patient.php?id=".$row['PatientID']."';\" data-toggle='tooltip' data-placement='top' title='Edit User'><i class='fas fa-pen'></i></button>
               <button type='submit' class='btn btn-danger rounded-circle' data-toggle='tooltip' data-placement='top' title='Delete User'><i class='fas fa-times'></i></button>
             </form>
