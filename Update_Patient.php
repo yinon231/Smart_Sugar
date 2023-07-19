@@ -112,7 +112,7 @@ if (isset($_SESSION['id'])) {
     </header>
   <main>
   <div class="container-fluid add">
-  <h1>Add Profile</h1>
+  <h1>Update Profile</h1>
   <form action="" method="post" enctype="multipart/form-data" id="update">
         <div class="avatar-upload">
           <div class="avatar-preview">
