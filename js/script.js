@@ -120,6 +120,31 @@ if (formDel1) {
     }
   }));
 }
+function showTabContent(tabName) {
+  // Hide all tab content
+  const tabContents = document.querySelectorAll('.tab-content');
+  tabContents.forEach(tab => tab.style.display = 'none');
+
+  // Show the selected tab content and add active class to the button
+  const selectedTab = document.getElementById(tabName);
+  selectedTab.style.display = 'block';
+}
+
+function showText(text, tabName) {
+  // Remove any previously displayed text in the active tab
+  const activeTabContent = document.getElementById(tabName).querySelector('.text-container');
+  if (activeTabContent) {
+      // Update the content inside the existing text container
+      activeTabContent.textContent = text;
+  } else {
+      // Create a new text container and display the text
+      const textContainer = document.createElement('div');
+      textContainer.classList.add('text-container');
+      textContainer.textContent = text;
+      const activeTab = document.getElementById(tabName);
+      activeTab.appendChild(textContainer);
+  }
+}
 
 
 

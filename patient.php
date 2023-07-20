@@ -143,7 +143,11 @@ else
         <div class="wrapper">
          <div class="container">
           <h1>Dashboard</h1>
-          <h3>Track your patient</h3>
+          <?php
+          if($_SESSION['user_type']=="admin")
+            echo "<h3>Track your patient</h3> ";
+          ?>
+         
             <div class="rectangle">
                 <h1 class="title"><?php echo $row['name'] ?></h1>
                 <div id="header">
@@ -167,59 +171,46 @@ else
                   </div>
                 </div>
             </div>
-            <div id="flex2">
-            <div class="menuinside">
-                <ul class="nav flex-row">
-                  <li class="nav-item">
-                    <a href="#" class="nav-link active " onclick="toggleActive(this)">
-                        <i class="fa-solid fa-bars-progress"></i>Time at target destination</a></li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="toggleActive(this)">
-                        <i class="fa-solid fa-angles-up" style="color: #ffffff;"></i>
-                       High Glucose Events
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="toggleActive(this)">
-                        <i class="fa-solid fa-angles-down" style="color: #ffffff;"></i>
-                       Low Glucose Events
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="toggleActive(this)">
-                        <i class="fa-solid fa-list-check"></i>
-                       Recommendation
-                    </a>
-                  </li>
-                </ul>
+            <br>
+            <div class="rectangle">
+              <h4>Track By Date</h4>
+            <div class="centered-container">
+            <div class="side-menu">
+              <div class="tab-header">
+                <button class="tab-btn" onclick="showTabContent('low')">LOW</button>
+                <button class="tab-btn" onclick="showTabContent('high')">HIGH</button>
+                <button class="tab-btn" onclick="showTabContent('avg')">AVG</button>
+                <button class="tab-btn" onclick="showTabContent('recommendations')">RECOMMENDATIONS</button>
               </div>
-              <div class="change">
-                <br>
-                <div class="text-center">
-                    <span class="text_time">Time at target destination</a>
-                </div>
-                <div class="m-4">
-                  <ul class="nav nav-pills justify-content-center " id="myTab">
-                      <li class="nav-item">
-                          <a href="#" class="nav-link active  my-nav-link"><i class="fa-regular fa-calendar"><br></i>7 Days</a>
-                      </li>
-                      <li class="nav-item">
-                          <a href="#" class="nav-link  my-nav-link"><i class="fa-regular fa-calendar"><br></i>14 Days</a>
-                      </li>
-                      <li class="nav-item">
-                          <a href="#" class="nav-link  my-nav-link"><i class="fa-regular fa-calendar"><br></i>30 Days</a>
-                      </li>
-                      <li class="nav-item">
-                        <a href="#" class="nav-link  my-nav-link"><i class="fa-regular fa-calendar"><br></i>90 Days</a>
-                    </li><br>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link  my-nav-linkk"><i class="fa-regular fa-calendar"><br></i>19/6-26/6</a>
-                  </li>
-                  </ul>
+            </div>
+          </div>
+              <div class="tab-content" id="low">
+              <button class="inner-btn" onclick="showText('Low: 7 Days', 'low')">7 Days</button>
+              <button class="inner-btn" onclick="showText('Low: 14 Days', 'low')">14 Days</button>
+              <button class="inner-btn" onclick="showText('Low: 30 Days', 'low')">30 Days</button>
+              <div class="text-container"></div>
+          </div>
+
+          <div class="tab-content" id="high">
+              <button class="inner-btn" onclick="showText('High: 7 Days', 'high')">7 Days</button>
+              <button class="inner-btn" onclick="showText('High: 14 Days', 'high')">14 Days</button>
+              <button class="inner-btn" onclick="showText('High: 30 Days', 'high')">30 Days</button>
+              <div class="text-container"></div>
+          </div>
+
+          <div class="tab-content" id="avg">
+              <button class="inner-btn" onclick="showText('Avg: 7 Days', 'avg')">7 Days</button>
+              <button class="inner-btn" onclick="showText('Avg: 14 Days', 'avg')">14 Days</button>
+              <button class="inner-btn" onclick="showText('Avg: 30 Days', 'avg')">30 Days</button>
+              <div class="text-container"></div>
+          </div>
+
+              <div class="tab-content" id="recommendations">
+                  <p>This is the content for the Recommendations tab.</p>
               </div>
-              </div>
-            <div>
-          <div>
+          </div>           
+          <br>
+        <div>
       </div>
 
       <script src="script.js"></script>
