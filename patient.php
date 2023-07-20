@@ -2,8 +2,11 @@
 include "db.php";
 include "config.php";
 session_start();
+$id=$_GET['id'];
+
 if(isset($_SESSION['id']))
 {
+ 
   $query="SELECT tbl_203_patients.*, tbl_203_Diabetes_Type.Recommended FROM tbl_203_patients INNER JOIN tbl_203_Diabetes_Type ON tbl_203_patients.Type = tbl_203_Diabetes_Type.Type WHERE PatientID = ".$_GET['id'].""; 
   $result=mysqli_query($connection,$query);
   $row=mysqli_fetch_assoc($result);
@@ -151,46 +154,143 @@ else
                 </div>
             </div>
             <br>
-            <div class="rectangle">
+            <?php
+            if($_SESSION['user_type']=="admin")
+            {
+
+            echo "<div class='rectangle'>
               <h4>Track By Date</h4>
-            <div class="centered-container">
-            <div class="side-menu">
-              <div class="tab-header">
-                <button class="tab-btn" onclick="showTabContent('low')">LOW</button>
-                <button class="tab-btn" onclick="showTabContent('high')">HIGH</button>
-                <button class="tab-btn" onclick="showTabContent('avg')">AVG</button>
-                <button class="tab-btn" onclick="showTabContent('recommendations')">RECOMMENDATIONS</button>
+            <div class='centered-container'>
+            <div class='side-menu'>
+              <div class='tab-header'>
+                <button class='tab-btn' onclick=\"showTabContent('low')\">LOW</button>
+                <button class='tab-btn' onclick=\"showTabContent('high')\">HIGH</button>
+                <button class='tab-btn' onclick=\"showTabContent('avg')\">AVG</button>
               </div>
             </div>
           </div>
-              <div class="tab-content" id="low">
-              <button class="inner-btn" onclick="showText('Low: 7 Days', 'low')">7 Days</button>
-              <button class="inner-btn" onclick="showText('Low: 14 Days', 'low')">14 Days</button>
-              <button class="inner-btn" onclick="showText('Low: 30 Days', 'low')">30 Days</button>
-              <div class="text-container"></div>
-          </div>
 
-          <div class="tab-content" id="high">
-              <button class="inner-btn" onclick="showText('High: 7 Days', 'high')">7 Days</button>
-              <button class="inner-btn" onclick="showText('High: 14 Days', 'high')">14 Days</button>
-              <button class="inner-btn" onclick="showText('High: 30 Days', 'high')">30 Days</button>
-              <div class="text-container"></div>
-          </div>
+              <div class='tab-content' id='low'>
+                <button class='inner-btn' type='button' value='1 WEEK' onclick=\"showText('Low: 7 Days', 'low','1_WEEK','".$id."')\">7 Days</button>
+                <button class='inner-btn' type='button' value='2 WEEK' onclick=\"showText('Low: 14 Days', 'low','2_WEEK','".$id."')\">14 Days</button>
+                <button class='inner-btn' type='button' value='1 MONTH' onclick=\"showText('Low: 30 Days', 'low','1_MONTH','".$id."')\">30 Days</button>
+                <div class='text-container'></div>";
+                if(isset($_GET['date']))
+                {
+                switch($_GET['date'])
+                {
+                  case "1_WEEK":
+                    $query1 = "SELECT MIN(sugar_level) AS max_sugar_level_last_week FROM dbShnkr23stud2.tbl_203_measurements WHERE date >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK)";
+                    $result1=mysqli_query($connection,$query1);
+                    $row1=mysqli_fetch_assoc($result1);
+                   echo 
+                    "<span class='text'>".$row1['max_sugar_level_last_week']."</span>
+                    <span class='units'>mg/dL</span>";
+                    break;
+                  case "2_WEEK":
+                    $query1 = "SELECT MIN(sugar_level) AS max_sugar_level_last_week FROM dbShnkr23stud2.tbl_203_measurements WHERE date >= DATE_SUB(CURDATE(), INTERVAL 2 WEEK)";
+                    $result1=mysqli_query($connection,$query1);
+                    $row1=mysqli_fetch_assoc($result1);
+                    echo 
+                    "<span class='text'>".$row1['max_sugar_level_last_week']."</span>
+                    <span class='units'>mg/dL</span>";
+               
+                    break;
+                  case "1_MONTH":
+                    $query1 = "SELECT MIN(sugar_level) AS max_sugar_level_last_week FROM dbShnkr23stud2.tbl_203_measurements WHERE date >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)";
+                    $result1=mysqli_query($connection,$query1);
+                    $row1=mysqli_fetch_assoc($result1);
+                    echo 
+                    "<span class='text'>".$row1['max_sugar_level_last_week']."</span>
+                    <span class='units'>mg/dL</span>";
+                    break;
+                }
+             
+              }
+             echo" </div>
 
-          <div class="tab-content" id="avg">
-              <button class="inner-btn" onclick="showText('Avg: 7 Days', 'avg')">7 Days</button>
-              <button class="inner-btn" onclick="showText('Avg: 14 Days', 'avg')">14 Days</button>
-              <button class="inner-btn" onclick="showText('Avg: 30 Days', 'avg')">30 Days</button>
-              <div class="text-container"></div>
-          </div>
+             <div class='tab-content' id='high'>
+             <button class='inner-btn' type='button' value='1 WEEK' onclick=\"showText('High: 7 Days', 'high','1_WEEK','".$id."')\">7 Days</button>
+             <button class='inner-btn' type='button' value='2 WEEK' onclick=\"showText('High: 14 Days', 'high','2_WEEK','".$id."')\">14 Days</button>
+             <button class='inner-btn' type='button' value='1 MONTH' onclick=\"showText('High: 30 Days', 'high','1_MONTH','".$id."')\">30 Days</button>
+             <div class='text-container'></div>";
+             if(isset($_GET['date']))
+             {
+             switch($_GET['date'])
+             {
+               case "1_WEEK":
+                 $query1 = "SELECT MAX(sugar_level) AS max_sugar_level_last_week FROM dbShnkr23stud2.tbl_203_measurements WHERE date >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK)";
+                 $result1=mysqli_query($connection,$query1);
+                 $row1=mysqli_fetch_assoc($result1);
+                echo 
+                 "<span class='text'>".$row1['max_sugar_level_last_week']."</span>
+                 <span class='units'>mg/dL</span>";
+                 break;
+               case "2_WEEK":
+                 $query1 = "SELECT MAX(sugar_level) AS max_sugar_level_last_week FROM dbShnkr23stud2.tbl_203_measurements WHERE date >= DATE_SUB(CURDATE(), INTERVAL 2 WEEK)";
+                 $result1=mysqli_query($connection,$query1);
+                 $row1=mysqli_fetch_assoc($result1);
+                 echo 
+                 "<span class='text'>".$row1['max_sugar_level_last_week']."</span>
+                 <span class='units'>mg/dL</span>";
+            
+                 break;
+               case "1_MONTH":
+                 $query1 = "SELECT MAX(sugar_level) AS max_sugar_level_last_week FROM dbShnkr23stud2.tbl_203_measurements WHERE date >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)";
+                 $result1=mysqli_query($connection,$query1);
+                 $row1=mysqli_fetch_assoc($result1);
+                 echo 
+                 "<span class='text'>".$row1['max_sugar_level_last_week']."</span>
+                 <span class='units'>mg/dL</span>";
+                 break;
+             }
+          
+           }
+          echo" </div>
 
-              <div class="tab-content" id="recommendations">
-                  <p>This is the content for the Recommendations tab.</p>
-              </div>
+          <div class='tab-content' id='avg'>
+          <button class='inner-btn' type='button' value='1 WEEK' onclick=\"showText('Avg: 7 Days', 'avg','1_WEEK','".$id."')\">7 Days</button>
+          <button class='inner-btn' type='button' value='2 WEEK' onclick=\"showText('Avg: 14 Days', 'avg','2_WEEK','".$id."')\">14 Days</button>
+          <button class='inner-btn' type='button' value='1 MONTH' onclick=\"showText('Avg: 30 Days', 'avg','1_MONTH','".$id."')\">30 Days</button>
+          <div class='text-container'></div>";
+          if(isset($_GET['date']))
+          {
+          switch($_GET['date'])
+          {
+            case "1_WEEK":
+              $query1 = "SELECT AVG(sugar_level) AS max_sugar_level_last_week FROM dbShnkr23stud2.tbl_203_measurements WHERE date >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK)";
+              $result1=mysqli_query($connection,$query1);
+              $row1=mysqli_fetch_assoc($result1);
+             echo 
+              "<span class='text'>".$row1['max_sugar_level_last_week']."</span>
+              <span class='units'>mg/dL</span>";
+              break;
+            case "2_WEEK":
+              $query1 = "SELECT AVG(sugar_level) AS max_sugar_level_last_week FROM dbShnkr23stud2.tbl_203_measurements WHERE date >= DATE_SUB(CURDATE(), INTERVAL 2 WEEK)";
+              $result1=mysqli_query($connection,$query1);
+              $row1=mysqli_fetch_assoc($result1);
+              echo 
+              "<span class='text'>".$row1['max_sugar_level_last_week']."</span>
+              <span class='units'>mg/dL</span>";
+         
+              break;
+            case "1_MONTH":
+              $query1 = "SELECT AVG(sugar_level) AS max_sugar_level_last_week FROM dbShnkr23stud2.tbl_203_measurements WHERE date >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)";
+              $result1=mysqli_query($connection,$query1);
+              $row1=mysqli_fetch_assoc($result1);
+              echo 
+              "<span class='text'>".$row1['max_sugar_level_last_week']."</span>
+              <span class='units'>mg/dL</span>";
+              break;
+          }
+       
+        }
+       echo" </div>
           </div>           
           <br>
-        <div>
-      </div>
+      </div>";
+    }
+    ?>
 
       <script src="script.js"></script>
     </main>

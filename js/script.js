@@ -130,21 +130,25 @@ function showTabContent(tabName) {
   selectedTab.style.display = 'block';
 }
 
-function showText(text, tabName) {
-  // Remove any previously displayed text in the active tab
+function showText(text, tabName,date,id) {
+  const originalURL = "http://localhost/First_Submit/patient.php?id="+id;
+
+  // Reset the URL to the original URL
+  window.history.replaceState({}, document.title, originalURL);
   const activeTabContent = document.getElementById(tabName).querySelector('.text-container');
   if (activeTabContent) {
       // Update the content inside the existing text container
       activeTabContent.textContent = text;
-  } else {
-      // Create a new text container and display the text
-      const textContainer = document.createElement('div');
-      textContainer.classList.add('text-container');
-      textContainer.textContent = text;
-      const activeTab = document.getElementById(tabName);
-      activeTab.appendChild(textContainer);
-  }
+  } 
+
+  let newURL = window.location.href +'&date='+date;
+  window.location.href = newURL;
+
 }
+
+    
+
+
 
 
 
