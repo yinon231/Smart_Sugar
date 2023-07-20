@@ -1,4 +1,5 @@
 body{
+    font-family: 'Muli', sans-serif !important;
     background-color: #EDEDED !important;
     overflow-x: hidden;
 }
@@ -7,13 +8,10 @@ header{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 96px;
-    width: 100%;
-    background: -webkit-linear-gradient(#3E5D75, #3E5D75);
-    border-bottom: 1px solid #FFFFFF;
-	position:fixed;
-	right:0;
-	top:0;
+    height: 8.39844vh;
+    width: 100vw;
+    background-color: rgb(29, 54, 73);
+    border-bottom: 1px solid rgb(255, 255, 255);
 }
 .navbar-toggler{
     display: none;
@@ -45,12 +43,12 @@ header{
 }
 
 .material-symbols-outlined{
-    color: #ffff;
-    fill: #ffff;
-    font-size: 17px;
+    color: #fff;
+    fill: #fff;
+    font-size: 34px !important;
+    width: 28px;
     height: 34px;
-    margin-right: 10px;
-	text-decoration:none;
+    margin-right: 15px;
 }
 .icons-nav{
     font-size:15px !important;
@@ -62,7 +60,7 @@ header{
     margin-right: 11px;
     background-image: url(../images/Hagit_image.png);
     width: 61px;
-    height: 57px;
+    height: 40px;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -73,9 +71,10 @@ header{
     width: auto;
 }
 .nav-link{
-   display: flex !important;
-   align-items: center !important;
-   color:#ffff !important;
+    display: flex !important;
+    align-items: center !important;
+    color: #fff !important;
+    font-family: 'Amiko';
 }
 .nav-underline {
     gap: 27px !important;
@@ -254,13 +253,23 @@ h1{
         margin-bottom: 2.93vh;
         text-align: end;
     }
-    
-    
     .row {
         height: 50px;
         display: flex;
         align-items: center;
         padding: 0 20px;
+    }
+    .row-qa{
+        height: auto !important;
+        align-items: start;
+    }
+    .row-nu{
+        height: auto !important;
+        display: flex !important;
+        align-items: unset;
+    }
+    .card-nu{
+        background-color: #EDEDED !important;
     }
     
     .col,.col-1,.col-2,.col-3 {
@@ -405,7 +414,53 @@ h1{
         color: #000000;
     }
 
+
+#test1 {
+    background-color: #eee;
+    margin-top: 20px;
+}
+.card {
+    box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+}
+.btn-nu{
+    background-color: rgb(29, 54, 73) !important;
+}
+.nav-tabs-custom .nav-item .nav-link.active {
+    color: #6c6ff5 !important;
+}
+.nav-tabs-custom .nav-item {
+    position: relative;
+    color: #271050;
+}
+.nav-tabs-custom .nav-item .nav-link.active:after {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+.nav-tabs-custom .nav-item .nav-link::after {
+    content: "";
+    background: #6c6ff5;
+    height: 2px;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: -1px;
+    -webkit-transition: all 250ms ease 0s;
+    transition: all 250ms ease 0s;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
+.font-size-16 {
+    font-size: 16px;
+}
+
     @media (max-width: 768px) {
+        .nav-justified .nav-item {
+            width: 100%;
+            text-align: center;
+          }
+        .material-symbols-outlined{
+            padding-right: 10px !important;
+        }
         #flex-icons{
             display: none;
         }
@@ -450,3 +505,24 @@ h1{
         margin-bottom: 7.031vh;
        }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

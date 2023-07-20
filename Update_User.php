@@ -35,18 +35,7 @@ if (isset($_SESSION['id'])) {
 </head>
 <body>
 <header>
-    <?php
-     if($_SESSION['user_type']=="admin")
-     {
-      echo "<a href='index.php' id='logo'></a>";
-     }
-     else
-     {
-      echo "<a href='#' id='logo'></a>";
-     }
-    ?>
- 
-  
+    <a href="#" id="logo"></a>
     <button class="navbar-toggler" type="button" id="btn-hamburger" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
         <span class="material-symbols-outlined">menu</span>
       </button>
@@ -57,36 +46,30 @@ if (isset($_SESSION['id'])) {
         </div>
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <?php
+            if($_SESSION['user_type']=="admin")
+            {
+              echo "<li class='nav-item'>
+              <a class='nav-link' href='index.php'>
+                  <span class='material-symbols-outlined icons-nav'>person</span>
+                  My Profiles
+              </a>
+            </li>";
+            }
+            ?>
               <li class="nav-item">
-                <?php 
-              if($_SESSION['user_type']=="admin")
-                {
-                    echo "<a class='nav-link' href='index.php'>
-                        <span class='material-symbols-outlined icons-nav'>person</span>
-                        My Profiles
-                    </a>";
-                }
-                    ?>
-              </li>
-              <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="news&update.php">
                         <span class="material-symbols-outlined icons-nav">article</span>
                         News&Update
                     </a>
               </li>
               <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="qa.php">
                         <span class="material-symbols-outlined icons-nav">mode_comment</span>
                         FAQ   
                     </a>
               </li>
-              <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <span class="material-symbols-outlined icons-nav">call</span>
-                        Contact   
-                    </a>
-             </li> 
-              <a class="horizontal-line" href="#"></a>
+              <a class="horizontal-line" href="settings.php"></a>
               <li class="nav-item">
                 <a class="nav-link" href="Update_User.php">
                     <span class="material-symbols-outlined icons-nav">settings</span>
@@ -107,24 +90,21 @@ if (isset($_SESSION['id'])) {
       <?php
       if($_SESSION['user_type']=="admin")
       {
-       echo "<li class='nav-item'>
-        <a class='nav-link' aria-current='page' href='index.html'>My Profiles</a>
-       </li>";
-      }
+        echo "<li class='nav-item'>
+        <a class='nav-link' aria-current='page' href='index.php'>My Profiles</a>
+      </li>";
 
+      }
       ?>
-     
+        
         <li class="nav-item">
-          <a class="nav-link" href="#">News&Update</a>
+          <a class="nav-link" href="news&update.php">News&Update</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">FAQ</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
+          <a class="nav-link" href="qa.php">FAQ</a>
         </li>
       </ul>
-      <div id="flex-icons">
+    <div id="flex-icons">
         <a href="Update_User.php" class="material-symbols-outlined" >
             <span class="material-symbols-outlined">settings</span>
         </a>

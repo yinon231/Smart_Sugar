@@ -1,21 +1,124 @@
+<?php
+include "db.php";
+include "config.php";
+session_start();
+if (isset($_SESSION['id'])) {
+  $query="SELECT * FROM tbl_203_patients WHERE UserID=".$_SESSION['id']."";
+  $result=mysqli_query($connection,$query);  
+} else {
+  header('Location: ' .URL. 'login.php');
+  
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <title>Faqs frequently asked questions</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/qafina.css" rel="stylesheet">
+<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Amiko:regular,600,700" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/stylecanvas.scss">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Document</title>
 </head>
+<header>
+    <a href="#" id="logo"></a>
+    <button class="navbar-toggler" type="button" id="btn-hamburger" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <?php
+            if($_SESSION['user_type']=="admin")
+            {
+              echo "<li class='nav-item'>
+              <a class='nav-link' href='index.php'>
+                  <span class='material-symbols-outlined icons-nav'>person</span>
+                  My Profiles
+              </a>
+            </li>";
+            }
+            ?>
+              <li class="nav-item">
+                    <a class="nav-link" href="news&update.php">
+                        <span class="material-symbols-outlined icons-nav">article</span>
+                        News&Update
+                    </a>
+              </li>
+              <li class="nav-item">
+                    <a class="nav-link" href="qa.php">
+                        <span class="material-symbols-outlined icons-nav">mode_comment</span>
+                        FAQ   
+                    </a>
+              </li>
+              <a class="horizontal-line" href="settings.php"></a>
+              <li class="nav-item">
+                <a class="nav-link" href="Update_User.php">
+                    <span class="material-symbols-outlined icons-nav">settings</span>
+                    Settings
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="logout.php">
+                    <span class="material-symbols-outlined icons-nav">logout</span>
+                    Logout
+                </a>
+              </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <ul class="nav nav-underline">
+      <?php
+      if($_SESSION['user_type']=="admin")
+      {
+        echo "<li class='nav-item'>
+        <a class='nav-link' aria-current='page' href='index.php'>My Profiles</a>
+      </li>";
+
+      }
+      ?>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="news&update.php">News&Update</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="qa.php">FAQ</a>
+        </li>
+      </ul>
+    <div id="flex-icons">
+        <a href="Update_User.php" class="material-symbols-outlined" >
+            <span class="material-symbols-outlined">settings</span>
+        </a>
+        <a href="logout.php" class="material-symbols-outlined" >
+        <span class="material-symbols-outlined">logout</span>
+        </a>
+        <a href="#" id="circle" <?php if(isset($_SESSION['img'])) echo "style='background-image:url(".$_SESSION['img'].")'"; else echo 'style=\'background-image:url("images/default.png")\'';?>></a>
+    </div>
+</header>
 
 <body>
   <div class="container">
-    <div class="row">
+    <div class="row row-qa">
       <div class="col-lx-12">
         <div class="card">
           <div class="card-body">
-            <div class="row justify-content-center mt-4">
+            <div class="row row-qa justify-content-center mt-4">
               <div class="col-xl-5 col-lg-8">
                 <div class="text-center">
                   <h3>Frequently Asked Questions?</h3>
@@ -28,7 +131,7 @@
                 </div>
               </div>
             </div>
-            <div class="row justify-content-center mt-5">
+            <div class="row row-qa justify-content-center mt-5">
               <div class="col-9">
                 <ul class="nav nav-tabs  nav-tabs-custom nav-justified justify-content-center faq-tab-box" id="pills-tab"
                   role="tablist">
@@ -52,7 +155,7 @@
                 <div class="tab-content pt-3" id="pills-tabContent">
                   <div class="tab-pane fade active show" id="pills-genarel" role="tabpanel"
                     aria-labelledby="pills-genarel-tab">
-                    <div class="row g-4 mt-2">
+                    <div class="row row-qa g-4 mt-2">
                       <div class="col-lg-6">
                         <h5>What is SmartSugar ?</h5>
                         <p class="lg-base">individuals with diabetes in effectively tracking and understanding their
@@ -78,7 +181,7 @@
                   </div>
                   <div class="tab-pane fade" id="pills-privacy_policy" role="tabpanel"
                     aria-labelledby="pills-privacy_policy-tab">
-                    <div class="row g-4 mt-2">
+                    <div class="row row-qa g-4 mt-2">
                       <div class="col-lg-6">
                         <h5>How is my personal information collected?</h5>
                         <p class="lg-base">Personal information is collected when users sign up and create a profile
@@ -108,6 +211,10 @@
       </div>
     </div>
   </div>
+  <footer>
+      <span>&copy; Copyright 2023 SmartSugar</span>   
+    </footer id=footer>
+    </footer>
 
   <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

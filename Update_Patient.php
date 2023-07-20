@@ -46,31 +46,30 @@ if (isset($_SESSION['id'])) {
         </div>
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <?php
+            if($_SESSION['user_type']=="admin")
+            {
+              echo "<li class='nav-item'>
+              <a class='nav-link' href='index.php'>
+                  <span class='material-symbols-outlined icons-nav'>person</span>
+                  My Profiles
+              </a>
+            </li>";
+            }
+            ?>
               <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <span class="material-symbols-outlined icons-nav">person</span>
-                        My Profiles
-                    </a>
-              </li>
-              <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="news&update.php">
                         <span class="material-symbols-outlined icons-nav">article</span>
                         News&Update
                     </a>
               </li>
               <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="qa.php">
                         <span class="material-symbols-outlined icons-nav">mode_comment</span>
                         FAQ   
                     </a>
               </li>
-              <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <span class="material-symbols-outlined icons-nav">call</span>
-                        Contact   
-                    </a>
-             </li> 
-              <a class="horizontal-line" href="#"></a>
+              <a class="horizontal-line" href="settings.php"></a>
               <li class="nav-item">
                 <a class="nav-link" href="Update_User.php">
                     <span class="material-symbols-outlined icons-nav">settings</span>
@@ -88,17 +87,21 @@ if (isset($_SESSION['id'])) {
       </div>
     </div>
     <ul class="nav nav-underline">
+      <?php
+      if($_SESSION['user_type']=="admin")
+      {
+        echo "<li class='nav-item'>
+        <a class='nav-link' aria-current='page' href='index.php'>My Profiles</a>
+      </li>";
+
+      }
+      ?>
+        
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="#">My Profiles</a>
+          <a class="nav-link" href="news&update.php">News&Update</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">News&Update</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">FAQ</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
+          <a class="nav-link" href="qa.php">FAQ</a>
         </li>
       </ul>
     <div id="flex-icons">
