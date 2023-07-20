@@ -130,8 +130,8 @@ function showTabContent(tabName) {
   selectedTab.style.display = 'block';
 }
 
-function showText(text, tabName,date,id) {
-  const originalURL = "http://localhost/First_Submit/patient.php?id="+id;
+function showText(text,tabName,date,id) {
+   const originalURL = "http://localhost/First_Submit/patient.php?id="+id;
 
   // Reset the URL to the original URL
   window.history.replaceState({}, document.title, originalURL);
@@ -141,7 +141,7 @@ function showText(text, tabName,date,id) {
       activeTabContent.textContent = text;
   } 
 
-  let newURL = window.location.href +'&date='+date;
+  let newURL = window.location.href +'&date='+date+'&tabname='+tabName;
   window.location.href = newURL;
 
 }
