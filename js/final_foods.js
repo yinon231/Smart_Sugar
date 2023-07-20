@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
             searchResultsContainer.firstChild.remove();
           }
           // Clear the search results container
-          if(!searchResultsContainer.firstChild)
+          if(searchResultsContainer.firstChild=="")
           {
             searchResultsContainer.style.display="none";
           }
